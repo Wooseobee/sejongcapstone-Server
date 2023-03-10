@@ -14,7 +14,7 @@
 
 </div>
 
-### Stacks
+# 🔨 Stacks
 
 ---
 
@@ -57,9 +57,69 @@
 <br>
 
 ---
+# 📋 API 문서  <a name = "api"></a>
 
+<details>
+   <summary> 내용 보기 (👈 Click) </summary>
+<br/>
+
+[API 문서](https://app.gitbook.com/o/vevRp1jUjMUAYyXciGrZ/s/ONTo4Gk9wGMFQKmz9OxZ/)
+
+</details>
 <br>
 
+---
+
+# 🛠 아키텍처  <a name = "structure"></a>
+
+<details>
+   <summary> 내용 보기 (👈 Click) </summary>
+<br>
+
+<div align="center">
+ <img src="./img/structure.JPG" alt="structure">
+</div>
+
+- Spring Boot 2.7.3
+- AWS EC2 / S3
+  - 3D 데이터는 JSON 형식의 파일이며 용량이 커 S3 스토리지에 저장
+  - DB에는 S3의 객체 접근 URL을 저장하는 방식 채택
+- MySQL + Redis
+
+</details>
+<br>
+
+---
+
+# ⚒️ 주요 기능  <a name = "function"></a>
+
+<details>
+   <summary> 내용 보기 (👈 Click) </summary>
+<br>
+
+<div align="center">
+ <img src="./img/function.png" alt="function">
+</div>
+
+- 지도
+  - 지도 내 검색을 통해 원하는 지역의 방을 찾아볼 수 있음
+  - 등록된 방을 핀으로 지도에 표시
+  - 핀 선택시 3D로 방을 확인할 수 있음
+  - 기존의 방 보기 / 방의 구조만 보기 중 선택
+    - 가구를 배치해 볼 수 있어 사전 인테리어 구상에 도움
+    - 가구의 배치 초기화 기능 제공
+- 회원가입
+  - 방 등록을 원한다면 회원가입 필요
+  - 요구되는 정보 : 아이디, 패스워드, 이름, 닉네임, 휴대폰 번호, 상호명
+- 로그인
+  - 개인정보 수정 기능 제공
+  - .PTS 형식의 파일 업로드 기능 제공
+  - 회원탈퇴시 등록한 방 정보 모두 삭제
+
+</details>
+<br>
+
+---
 
 ### [User Api]
 ------------------
