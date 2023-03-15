@@ -1,16 +1,12 @@
-# Welcome!
+---
+description: 작성중입니다
+---
 
-## Welcome to MyAPI
+# 👋 Welcome!
 
-Welcome to MyAPI! Here you'll find all the documentation you need to get up and running with the MyAPI API.
+## Welcome to Capstone3D-API Docs
 
-## Want to jump right in?
 
-Feeling like an eager beaver? Jump in to the quick start docs and get making your first request:
-
-{% content-ref url="quick-start.md" %}
-[quick-start.md](quick-start.md)
-{% endcontent-ref %}
 
 ## Want to deep dive?
 
