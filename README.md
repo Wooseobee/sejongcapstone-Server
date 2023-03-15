@@ -167,7 +167,7 @@
    <summary> 내용 보기 (👈 Click) </summary>
 <br/>
 
-[API 문서](https://app.gitbook.com/o/vevRp1jUjMUAYyXciGrZ/s/ONTo4Gk9wGMFQKmz9OxZ/)
+[API 문서](https://wooseobee.gitbook.io/capstone3d-api-docs/)
 
 </details>
 <br>
