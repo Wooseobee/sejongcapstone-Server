@@ -21,9 +21,9 @@ public class Furniture {
 
     private String furniture_img_url;
 
-    private int x;
+    private double x;
 
-    private int y;
+    private double y;
 
-    private int z;
+    private double z;
 }

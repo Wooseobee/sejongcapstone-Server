@@ -19,5 +19,11 @@ public class Location {
 
     private double lng;
 
+    private int floor;
+
+    private int building;
+
+    private String unit;
+
     private String address;
 }
