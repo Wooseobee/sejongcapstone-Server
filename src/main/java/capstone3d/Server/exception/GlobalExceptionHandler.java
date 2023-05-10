@@ -19,7 +19,20 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<AllResponse> handleValidError(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
+        String request = e.getObjectName();
+        int status;
+        switch (request) {
+            case "LoginRequest":
+                status = StatusMessage.Login_Request_Error.getStatus();
+                break;
+            case "SingUpRequest":
+                status = StatusMessage.SignUp_Request_Error.getStatus();
+                break;
+            default:
+                status = StatusMessage.Request_Error.getStatus();
+                break;
+        }
 
-        return AllResponse.ValidErrorResponseEntity(StatusMessage.SignUp_Request_Error.getStatus(),bindingResult);
+        return AllResponse.ValidErrorResponseEntity(status, bindingResult);
     }
 }
