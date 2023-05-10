@@ -29,10 +29,12 @@ public enum StatusMessage {
     Request_Error(409, "요청 형식이 잘못되었습니다."),
     SignUp_Request_Error(410, "회원가입 요청 형식이 잘못되었습니다."),
     Login_Request_Error(411, "로그인 요청 형식이 잘못되었습니다."),
-    UploadFile_format_Error(412, "업로드 파일 형식이 잘못되었습니다."),
-    Upload_Error(413, "업로드 요청 형식이 잘못되었습니다."),
-    Admin_UploadFile_format_Error(414, "괸리자 업로드 파일 형식이 잘못되었습니다."),
-    Admin_Upload_Error(415, "관리자 업로드 요청 형식이 잘못되었습니다.");
+    Update_Request_Error(412, "회원정보수정시 비밀번호는 필수입니다."),
+    Update_Request_Not_Match_Password(413, "수정 비밀번호가 일치하지 않습니다."),
+    UploadFile_format_Error(414, "업로드 파일 형식이 잘못되었습니다."),
+    Upload_Error(415, "업로드 요청 형식이 잘못되었습니다."),
+    Admin_UploadFile_format_Error(416, "괸리자 업로드 파일 형식이 잘못되었습니다."),
+    Admin_Upload_Error(417, "관리자 업로드 요청 형식이 잘못되었습니다.");
 
     private int status;
     private String message;

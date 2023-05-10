@@ -59,7 +59,7 @@ public class UserController {
 
     @PutMapping("/user")
     public AllResponse update(
-            @RequestBody UpdateRequest updateRequest
+            @RequestBody @Valid UpdateRequest updateRequest
     ) {
         return new AllResponse(StatusMessage.Update_Success.getStatus(), StatusMessage.Update_Success.getMessage(), 1, userService.update(updateRequest));
     }
