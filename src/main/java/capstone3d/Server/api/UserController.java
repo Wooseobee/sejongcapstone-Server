@@ -37,7 +37,7 @@ public class UserController {
 
     @PostMapping("/login")
     public AllResponse login(
-            @RequestBody LoginRequest loginRequest, HttpServletResponse response
+            @RequestBody @Valid LoginRequest loginRequest, HttpServletResponse response
     ) throws JsonProcessingException {
         UserResponse userResponse = userService.login(loginRequest);
         TokenResponse tokenResponse = jwtTokenProvider.createTokensByLogin(userResponse);
