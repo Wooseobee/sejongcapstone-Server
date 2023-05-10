@@ -21,6 +21,7 @@ import static capstone3d.Server.domain.Role.ROLE_ADMIN;
 import static capstone3d.Server.domain.Role.ROLE_USER;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserService {
 
@@ -29,7 +30,6 @@ public class UserService {
     private final RedisDao redisDao;
     private final S3UploadService s3UploadService;
 
-    @Transactional
     public UserResponse singUp(SignUpRequest signUpRequest) {
         boolean isExistId = userRepository
                 .existsByEmail(signUpRequest.getEmail());
@@ -82,7 +82,6 @@ public class UserService {
         return UserResponse.of(user);
     }
 
-    @Transactional
     public UpdateResponse update(UpdateRequest updateRequest) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId = userDetails.getUser().getEmail();
@@ -108,7 +107,6 @@ public class UserService {
         return new UpdateResponse(user.getNickname(), user.getBusiness_name());
     }
 
-    @Transactional
     public void withdraw(String password) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId = userDetails.getUser().getEmail();
