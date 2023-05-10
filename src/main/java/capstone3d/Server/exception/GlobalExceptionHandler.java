@@ -28,6 +28,9 @@ public class GlobalExceptionHandler {
             case "SingUpRequest":
                 status = StatusMessage.SignUp_Request_Error.getStatus();
                 break;
+            case "UpdateRequest":
+                status = StatusMessage.Update_Request_Error.getStatus();
+                break;
             default:
                 status = StatusMessage.Request_Error.getStatus();
                 break;

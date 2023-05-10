@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import static capstone3d.Server.domain.Role.ROLE_ADMIN;
 import static capstone3d.Server.domain.Role.ROLE_USER;
@@ -34,11 +35,8 @@ public class UserService {
         boolean isExistId = userRepository
                 .existsByEmail(signUpRequest.getEmail());
 
-        boolean isExistNickname = userRepository
-                .existsByNickname(signUpRequest.getNickname());
-
         if (isExistId) throw new BadRequestException(StatusMessage.Email_Duplicated);
-        if (isExistNickname) throw new BadRequestException(StatusMessage.Nickname_Duplicated);
+        if (isExistNickname(signUpRequest.getNickname())) throw new BadRequestException(StatusMessage.Nickname_Duplicated);
 //        회원가입 요청 검증 @valid 어노테이션 이용
 //        if (signUpRequest.getBusiness_name() == null || signUpRequest.getNickname() == null ||
 //                signUpRequest.getPassword() == null || signUpRequest.getPhone() == null || signUpRequest.getEmail() == null) {
@@ -76,10 +74,7 @@ public class UserService {
                 .findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new BadRequestException(StatusMessage.Login_Fail));
 
-        boolean matches = passwordEncoder.matches(
-                loginRequest.getPassword(),
-                user.getPassword());
-        if (!matches) throw new BadRequestException(StatusMessage.Login_Fail);
+        if (!checkPasswordMatching(loginRequest.getPassword(), user)) throw new BadRequestException(StatusMessage.Login_Fail);
         return UserResponse.of(user);
     }
 
@@ -89,18 +84,25 @@ public class UserService {
         User user = userRepository
                 .findByEmail(userId)
                 .orElseThrow(() -> new BadRequestException(StatusMessage.Not_Found_User));
+        String password = updateRequest.getPassword();
+        String changePassword = updateRequest.getChangePassword();
+        String checkChangePassword = updateRequest.getCheckChangePassword();
+        String businessName = updateRequest.getBusiness_name();
+        String nickname = updateRequest.getNickname();
 
-        if (updateRequest.getBusiness_name() != null && !updateRequest.getBusiness_name().equals("")) {
+        if (!checkPasswordMatching(password, user)) throw new BadRequestException(StatusMessage.Not_Match_Password);    // 비밀번호 확인
+
+        if (StringUtils.hasText(businessName)) {     // businessName 변경
             user.updateBusiness_name(updateRequest.getBusiness_name());
         }
-        if (updateRequest.getPassword() != null && !updateRequest.getPassword().equals("")) {
-            String encodePassword = passwordEncoder.encode(updateRequest.getPassword());
+        if (StringUtils.hasText(changePassword) || StringUtils.hasText(checkChangePassword)) {   // 비밀번호 변경
+            if(!changePassword.equals(checkChangePassword))
+                throw new BadRequestException(StatusMessage.Not_Match_Password);
+            String encodePassword = passwordEncoder.encode(changePassword);
             user.updatePassword(encodePassword);
         }
-        if (updateRequest.getNickname() != null && !updateRequest.getNickname().equals("")) {
-            boolean isExistNickname = userRepository
-                    .existsByNickname(updateRequest.getNickname());
-            if (isExistNickname) throw new BadRequestException(StatusMessage.Nickname_Duplicated);
+        if (StringUtils.hasText(nickname)) {    // 닉네임 변경
+            if (isExistNickname(nickname)) throw new BadRequestException(StatusMessage.Nickname_Duplicated);
 
             user.updateNickName(updateRequest.getNickname());
         }
@@ -115,14 +117,18 @@ public class UserService {
                 .findByEmail(userId)
                 .orElseThrow(() -> new BadRequestException(StatusMessage.Not_Found_User));
 
-        boolean matches = passwordEncoder.matches(
-                password,
-                user.getPassword());
-
-        if (!matches) throw new BadRequestException(StatusMessage.Not_Match_Password);
+        if (!checkPasswordMatching(password, user)) throw new BadRequestException(StatusMessage.Not_Match_Password);
 
         s3UploadService.deleteFiles(user);
         redisDao.deleteValues(userId);
         userRepository.delete(user);
+    }
+
+    private boolean checkPasswordMatching(String password, User user) {
+        return passwordEncoder.matches(password, user.getPassword());
+    }
+
+    private boolean isExistNickname(String nickname) {  // 닉네임 중복검사
+        return userRepository.existsByNickname(nickname);
     }
 }
