@@ -17,6 +17,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.Map;
 import java.util.Objects;
 
@@ -29,7 +30,7 @@ public class UserController {
 
     @PostMapping("/sign-up")
     public AllResponse singUp(
-            @RequestBody SignUpRequest signUpRequest
+            @RequestBody @Valid SignUpRequest signUpRequest
     ) {
         return new AllResponse(StatusMessage.Sign_Up_Success.getStatus(), StatusMessage.Sign_Up_Success.getMessage(), 1, userService.singUp(signUpRequest));
     }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 
 @Data
 @AllArgsConstructor
@@ -20,6 +21,15 @@ public class AllResponse<T> {
                 .body(AllResponse.builder()
                         .status(e.getStatus())
                         .message(e.getMessage())
+                        .build()
+                );
+    }
+    public static ResponseEntity<AllResponse> ValidErrorResponseEntity(int status, BindingResult bindResult) {
+        return ResponseEntity
+                .status(status)
+                .body(AllResponse.builder()
+                        .status(status)
+                        .message(bindResult.getFieldErrors().get(0).getDefaultMessage())
                         .build()
                 );
     }
