@@ -74,7 +74,7 @@ public class UserService {
                 .findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new BadRequestException(StatusMessage.Login_Fail));
 
-        if (!checkPasswordMatching(loginRequest.getPassword(), user)) throw new BadRequestException(StatusMessage.Login_Fail);
+        if (!checkPasswordMatching(loginRequest.getPassword(), user)) throw new BadRequestException(StatusMessage.Not_Match_Password);
         return UserResponse.of(user);
     }
 
