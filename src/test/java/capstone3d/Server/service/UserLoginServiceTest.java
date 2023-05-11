@@ -33,7 +33,7 @@ public class UserLoginServiceTest {
     void loginSuccess() {
         //given
         SignUpRequest request = signUpRequest("a@b.com","별명");
-        LoginRequest loginRequest = LoginRequest("a@b.com","1234");
+        LoginRequest loginRequest = LoginRequestForTest.LoginRequest("a@b.com","1234");
 
         //when
         UserResponse signUpResponse = userService.singUp(request);
@@ -52,7 +52,7 @@ public class UserLoginServiceTest {
     void loginFailByEmailUnCorrect() {
         //given
         SignUpRequest request = signUpRequest("a@b.com","별명");
-        LoginRequest loginRequest = LoginRequest("a@b2.com","1234");
+        LoginRequest loginRequest = LoginRequestForTest.LoginRequest("a@b2.com","1234");
 
         //when
         userService.singUp(request);
@@ -67,7 +67,7 @@ public class UserLoginServiceTest {
     void loginFailByPasswordUnCorrect() {
         //given
         SignUpRequest request = signUpRequest("a@b.com","별명");
-        LoginRequest loginRequest = LoginRequest("a@b.com","12345");
+        LoginRequest loginRequest = LoginRequestForTest.LoginRequest("a@b.com","12345");
 
         //when
         userService.singUp(request);
@@ -75,12 +75,5 @@ public class UserLoginServiceTest {
         //then
         BadRequestException exception = assertThrows(BadRequestException.class, () -> userService.login(loginRequest));
         assertThat(exception.getStatusMessage()).isEqualTo(StatusMessage.Not_Match_Password);
-    }
-
-    private static LoginRequest LoginRequest(String email, String password) {
-        return LoginRequest.builder()
-                .email(email)
-                .password(password)
-                .build();
     }
 }
