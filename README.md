@@ -175,6 +175,7 @@
 </details>
 <br>
 
+<!--
 ---
 
 # 📋 API 문서  <a name = "api"></a>
@@ -182,11 +183,10 @@
 <details>
    <summary> 내용 보기 (👈 Click) </summary>
 <br/>
-
 [API 문서](https://wooseobee.gitbook.io/capstone3d-api-docs/)
-
 </details>
 <br>
+-->
 
 ---
 
